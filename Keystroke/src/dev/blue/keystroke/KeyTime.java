@@ -30,11 +30,18 @@ public class KeyTime {
 		times.set(index, time);
 	}
 	
+	/**
+	 * @return the size of the key & time record.
+	 */
 	public int size() {
 		return chars.size();
 	}
 	
 	public double getTimeInSeconds(int index) {
 		return times.get(index)/1000000000.0;
+	}
+	
+	public double getTimeInMilliseconds(int index) {
+		return times.get(index)/1000000.0;
 	}
 }

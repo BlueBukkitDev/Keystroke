@@ -13,10 +13,16 @@ public class Window extends JFrame {
 	private KeyTracker tracker;
 
 	public Window() {
+		Dimension d = new Dimension(700, 500);
 		tracker = new KeyTracker();
 		this.setTitle("Keystroke Timer");
-		this.setSize(new Dimension(100, 100));
+		this.setSize(d);
+		this.setMaximumSize(d);
+		this.setMinimumSize(d);
+		this.setPreferredSize(d);
 		this.setLocationRelativeTo(null);
 		this.addKeyListener(new KeyManager(tracker));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.pack();
 	}
 }
