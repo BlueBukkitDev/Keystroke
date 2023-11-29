@@ -3,9 +3,7 @@ package dev.blue.keystroke;
 import java.awt.event.KeyEvent;
 
 public class KeyTracker {
-	/**
-	 * Takes in a char and a float, where char = the key typed, and long = time since last keystroke
-	 */
+
 	private KeyTime keys;
 	private EntryTracker entryTracker;
 	private long lastTime;
@@ -13,12 +11,36 @@ public class KeyTracker {
 	private boolean begun;
 	private long timeSinceLast = 0;
 	
+	/**
+	 * Tracks keyboard input characters and time until next keyboard input; after a completed input, sends that data to the 
+	 * EntryTracker for evaluation. 
+	 * 
+	 * To use, simply instantiate in a KeyListener class and call addKeystroke inside keyTyped(). Example: <br>
+	 * <pre>{@code
+	 *  public class KeyManager implements KeyListener {
+	 *      private KeyTracker tracker;
+	 *
+	 *      public KeyManager(KeyTracker tracker) {
+	 *          this.tracker = tracker;
+	 *      }
+	 * 
+	 *      @override
+	 *      keyTyped(KeyEvent e){
+	 *          addKeystroke(e.getKeyChar());
+	 *      }
+	 *  }
+	 * }</pre>
+	 */
 	public KeyTracker() {
 		keys = new KeyTime();
 		entryTracker = new EntryTracker();
 		begun = false;
 	}
 	
+	/**
+	 * Takes the input char and either completes an entry (if key char is VK_ENTER) or iterates an entry (any other key). 
+	 * @param value
+	 */
 	public void addKeystroke(char value) {
 		if(value == KeyEvent.VK_ENTER) {
 			iterateEntry(value);
@@ -34,6 +56,10 @@ public class KeyTracker {
 		lastTime = System.nanoTime();
 	}
 	
+	/**
+	 * Marks the first entry into the keyTime record, begins the key press timer. 
+	 * @param value
+	 */
 	private void initiate(char value) {
 		lastKey = value;
 		lastTime = System.nanoTime();
@@ -41,6 +67,10 @@ public class KeyTracker {
 		begun = true;
 	}
 	
+	/**
+	 * Updates the key press timer and inserts the last input and the time passed into the keyTime record. 
+	 * @param value - the character being input.
+	 */
 	private void iterateEntry(char value) {
 		timeSinceLast = System.nanoTime()-lastTime;
 		System.out.print(value);
@@ -48,7 +78,7 @@ public class KeyTracker {
 	}
 	
 	/**
-	 * 
+	 * Logs the whole record to the entry tracker, prints results to the console, resets the system for the next input, and runs an evaluation. 
 	 */
 	private void handleCompletion() {
 		entryTracker.addEntry(keys);

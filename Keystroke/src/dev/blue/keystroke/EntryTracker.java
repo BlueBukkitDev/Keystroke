@@ -6,10 +6,19 @@ import java.util.List;
 public class EntryTracker {
 	private List<KeyTime> entries;
 	
+	/**
+	 * Stores KeyTime records for comparison and evaluation to determine the differences in elapsed time between each keystroke, 
+	 * deriving a pattern to be used as a second form of security/authorization, using biological tendencies and patterns in a 
+	 * person's unique typing style. 
+	 */
 	public EntryTracker() {
 		entries = new ArrayList<KeyTime>();
 	}
 	
+	/**
+	 * Stores a KeyTime record to be evaluated. 
+	 * @param entry - the KeyTime record to store. 
+	 */
 	public void addEntry(KeyTime entry) {
 		entries.add(entry);
 	}
@@ -28,7 +37,7 @@ public class EntryTracker {
 			avgs.add((int)KeyTracker.ratDec(total/entries.size(), 1));
 		}
 		for(int i = 0; i < avgs.size(); i++) {
-			System.out.println(entries.get(0).getKey(i)+":"+avgs.get(i)+"ms");
+			System.out.println(entries.get(0).getChar(i)+":"+avgs.get(i)+"ms");
 		}
 	}
 }
